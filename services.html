@@ -2,7 +2,20 @@
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Baraka Homes LLC - Services</title>
+<!-- Tailwind CSS CDN - Used for static HTML site without build process -->
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Suppress Tailwind CDN production warning for static HTML sites
+  if (typeof console !== 'undefined' && console.warn) {
+    const originalWarn = console.warn;
+    console.warn = function(...args) {
+      if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) {
+        return; // Suppress Tailwind CDN warning
+      }
+      originalWarn.apply(console, args);
+    };
+  }
+</script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
@@ -42,6 +55,8 @@ box-shadow: 0 0 0 2px rgba(255, 255, 255, 1), 0 0 0 4px rgba(228, 228, 231, 1);
 max-height: 0;
 overflow: hidden;
 transition: max-height 0.3s ease-out;
+position: relative;
+z-index: 50;
 }
 .mobile-menu.open {
 max-height: 500px;
@@ -57,10 +72,17 @@ z-index: 40;
 opacity: 0;
 visibility: hidden;
 transition: opacity 0.3s ease, visibility 0.3s ease;
+pointer-events: none;
 }
 .mobile-menu-overlay.active {
 opacity: 1;
 visibility: visible;
+pointer-events: auto;
+}
+.mobile-menu > div {
+position: relative;
+z-index: 50;
+pointer-events: auto;
 }
 .touch-manipulation {
 touch-action: manipulation;
@@ -136,8 +158,8 @@ display: none;
       </nav>
 
       <!-- Mobile Menu -->
-      <div id="mobile-menu" class="mobile-menu md:hidden relative z-30 w-full mb-8">
-        <div class="bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200 shadow-xl p-6 flex flex-col gap-4">
+      <div id="mobile-menu" class="mobile-menu md:hidden relative w-full mb-8">
+        <div class="bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200 shadow-xl p-6 flex flex-col gap-4 relative z-50">
           <a href="index.html" class="text-sm font-semibold tracking-widest uppercase text-neutral-600 py-3 px-4 hover:bg-neutral-100 rounded-lg transition-colors touch-manipulation">Home</a>
           <a href="our-approach.html" class="text-sm font-semibold tracking-widest uppercase text-neutral-600 py-3 px-4 hover:bg-neutral-100 rounded-lg transition-colors touch-manipulation">Our Approach</a>
           <a href="services.html" class="text-sm font-semibold tracking-widest uppercase text-neutral-950 py-3 px-4 hover:bg-neutral-100 rounded-lg transition-colors touch-manipulation">Services</a>
